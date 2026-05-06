@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #720009;
+  --color-primary-container: #9d0011;
+  --color-on-primary-container: #ffa49c;
+  --color-primary-fixed: #ffdad6;
+  --color-on-primary-fixed: #410003;
+  --color-on-primary-fixed-variant: #930010;
+  
+  --color-secondary: #005faf;
+  --color-secondary-container: #54a0fe;
+  --color-on-secondary-container: #003567;
+  --color-secondary-fixed: #d4e3ff;
+  --color-on-secondary-fixed: #001c3a;
+  
+  --color-tertiary: #233841;
+  --color-tertiary-container: #3a4f59;
+  --color-on-tertiary-container: #aac0cc;
+  
+  --color-background: #f9f9f9;
+  --color-on-background: #1a1c1c;
+  
+  --color-surface: #f9f9f9;
+  --color-on-surface: #1a1c1c;
+  --color-surface-dim: #dadada;
+  --color-surface-bright: #f9f9f9;
+  --color-surface-container: #eeeeee;
+  --color-surface-container-low: #f3f3f3;
+  --color-surface-container-high: #e8e8e8;
+  --color-surface-container-highest: #e2e2e2;
+  --color-surface-container-lowest: #ffffff;
+  
+  --color-outline: #737783;
+  --color-outline-variant: #c3c6d4;
+  --color-on-surface-variant: #434652;
+  
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --radius-default: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+
+  --font-headline: "Work Sans", sans-serif;
+  --font-body: "Public Sans", sans-serif;
+}
+
+:root {
+  --background: #f9f9f9;
+  --foreground: #1a1c1c;
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    @apply antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headline);
+  }
+}
+
+/* --- Print Styles (The Precision Ledger No-Color Mode) --- */
+@media print {
+  /* Hide UI elements by default */
+  .no-print, nav, footer, button, .lucide {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Specific fit for the Intake Report */
+  #printable-form {
+    visibility: visible !important;
+    display: block !important;
+    position: relative !important;
+    width: 210mm !important;
+    height: 296mm !important;
+    margin: 0 auto !important;
+    padding: 10mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  /* Ensure all text is black for printing */
+  #printable-form * {
+    visibility: visible !important;
+    color: black !important;
+  }
+
+  #printable-form .bg-primary, 
+  #printable-form .bg-black {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* Custom Ledger Input Style */
+.modern-ledger-input {
+  border: none;
+  border-bottom: 2px solid transparent;
+  background-color: #e2e2e2;
+  transition: all 0.2s ease;
+}
+
+.modern-ledger-input:focus {
+  outline: none;
+  border-bottom-color: #720009;
+  box-shadow: none;
+  background-color: #eeeeee;
+}

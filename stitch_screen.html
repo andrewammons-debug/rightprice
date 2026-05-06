@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stock-In Inspection List | Right Price Auto Sales</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700;800;900&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001c3a",
+                        "on-primary-container": "#ffa49c",
+                        "primary-container": "#9d0011",
+                        "primary-fixed": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f9f9f9",
+                        "secondary-fixed": "#d4e3ff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#003567",
+                        "primary": "#720009",
+                        "on-tertiary-fixed-variant": "#354a53",
+                        "on-secondary-fixed-variant": "#004786",
+                        "surface-bright": "#f9f9f9",
+                        "outline": "#737783",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-tint": "#ba1a20",
+                        "secondary-container": "#54a0fe",
+                        "on-tertiary-container": "#aac0cc",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#cfe6f2",
+                        "tertiary": "#233841",
+                        "surface-container": "#eeeeee",
+                        "outline-variant": "#c3c6d4",
+                        "on-surface-variant": "#434652",
+                        "primary-fixed-dim": "#ffb3ac",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#410003",
+                        "surface-dim": "#dadada",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e2e2e2",
+                        "inverse-primary": "#ffb3ac",
+                        "tertiary-fixed-dim": "#b4cad6",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed": "#071e27",
+                        "secondary": "#005faf",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#3a4f59",
+                        "on-primary-fixed-variant": "#930010",
+                        "on-background": "#1a1c1c",
+                        "surface-container-high": "#e8e8e8",
+                        "on-error": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "secondary-fixed-dim": "#a5c8ff",
+                        "surface-container-low": "#f3f3f3",
+                        "surface": "#f9f9f9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Work Sans"],
+                        "body": ["Public Sans"],
+                        "label": ["Public Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Public Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Work Sans', sans-serif; }
+        .modern-ledger-input {
+            border: none;
+            border-bottom: 2px solid transparent;
+            background-color: #e2e2e2;
+            transition: all 0.2s ease;
+        }
+        .modern-ledger-input:focus {
+            outline: none;
+            border-bottom-color: #720009;
+            box-shadow: none;
+            background-color: #eeeeee;
+        }
+        .glass-header {
+            background: rgba(249, 249, 249, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md text-slate-600 dark:text-slate-400 font-medium fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 max-w-full">
+<div class="text-2xl font-black tracking-tighter text-red-900 dark:text-red-600">Right Price Auto Sales</div>
+<div class="hidden md:flex space-x-8">
+<a class="text-red-900 dark:text-red-500 font-bold border-b-2 border-red-900 dark:border-red-500 pb-1 hover:text-red-700 dark:hover:text-red-400 transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-red-700 dark:hover:text-red-400 transition-colors" href="#">Inventory</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-red-700 dark:hover:text-red-400 transition-colors" href="#">Reports</a>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-red-700">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-red-700">settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Inspector Profile" data-alt="professional portrait of a male automotive inspector in a clean uniform against a neutral studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk2i-8hBONlNZe7tecfoGtMaB1QFMiqdgIlZFpC7VVxa1jOq8o5KChlmv6l40WmR6yArWNVtitwGKGfT5rha0Sm4qPFtPxnH3_vLEE9nFKWrZtcFiBw4lI75GHQavisNDxuRBUrGuMmtzsO16Vc_BTLCIEUH1kNr7b4SpitsOSKF6JN4Oxkv3uRCFzHvcbo5WPXURW0R1AdPfedDdpP3YISf94E-iSLmIe-znmZN3FAiNHaw_ad98snwdFKiqSvaOuzFgefVfrXLTr"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Document Header Section -->
+<header class="mb-12 flex flex-col md:flex-row justify-between items-end gap-6 border-b-4 border-primary pb-8">
+<div class="space-y-1">
+<h1 class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary">RIGHT PRICE AUTO SALES, INC.</h1>
+<p class="text-label-md font-bold tracking-widest text-outline uppercase">5223 NW BROAD STREET, MURFREESBORO, TN. 37129</p>
+<div class="flex items-center gap-2 text-secondary font-bold">
+<span class="material-symbols-outlined text-sm">call</span>
+<span>615-893-1727</span>
+</div>
+</div>
+<div class="text-right">
+<h2 class="text-2xl font-bold text-on-surface tracking-tight">Stock-In Inspection List</h2>
+<p class="text-outline text-sm">Precision Ledger ID: #INV-2024-0892</p>
+</div>
+</header>
+<!-- VIN Scanner Floating Action -->
+<section class="mb-10">
+<button class="group flex items-center gap-4 bg-primary text-on-primary px-8 py-5 rounded-lg shadow-xl hover:bg-primary-container transition-all active:scale-95">
+<span class="material-symbols-outlined text-3xl">qr_code_scanner</span>
+<span class="text-xl font-black uppercase tracking-widest leading-none">Scan VIN</span>
+</button>
+</section>
+<!-- Form Layout Grid -->
+<form class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Vehicle & Purchase Info -->
+<div class="lg:col-span-8 space-y-10">
+<!-- Section 1: Vehicle Information -->
+<div class="bg-surface-container-low p-8 rounded-xl shadow-sm border-l-8 border-secondary">
+<h3 class="text-label-md font-bold tracking-widest text-secondary uppercase mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined">directions_car</span> Vehicle Information
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Year</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" placeholder="2024" type="text"/>
+</div>
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Make</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" placeholder="Ford" type="text"/>
+</div>
+<div class="md:col-span-2 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Model/Pkg</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" placeholder="F-150 Lariat" type="text"/>
+</div>
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Body</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" placeholder="Crew Cab" type="text"/>
+</div>
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Miles</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" placeholder="42,500" type="text"/>
+</div>
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Color</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" placeholder="Oxford White" type="text"/>
+</div>
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Transmission</label>
+<select class="modern-ledger-input px-3 py-2 text-on-surface font-semibold">
+<option>Auto</option>
+<option>Manual</option>
+</select>
+</div>
+<div class="md:col-span-4 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">VIN (Vehicle Identification Number)</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-bold tracking-widest uppercase" placeholder="1FTEW1CPXPKXXXXXX" type="text"/>
+</div>
+</div>
+</div>
+<!-- Section 2: Purchase Information -->
+<div class="bg-surface-container-low p-8 rounded-xl shadow-sm border-l-8 border-primary">
+<h3 class="text-label-md font-bold tracking-widest text-primary uppercase mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined">payments</span> Purchase Information
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Purchased From</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" placeholder="Auction Name or Individual" type="text"/>
+</div>
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Price</label>
+<div class="relative">
+<span class="absolute left-3 top-2 text-outline">$</span>
+<input class="modern-ledger-input pl-7 pr-3 py-2 w-full text-on-surface font-semibold" placeholder="0.00" type="text"/>
+</div>
+</div>
+<div class="md:col-span-1 flex flex-col gap-1">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Down</label>
+<div class="relative">
+<span class="absolute left-3 top-2 text-outline">$</span>
+<input class="modern-ledger-input pl-7 pr-3 py-2 w-full text-on-surface font-semibold" placeholder="0.00" type="text"/>
+</div>
+</div>
+<div class="md:col-span-4 flex items-center gap-4 pt-4 border-t border-outline-variant/20">
+<span class="text-label-md font-bold tracking-widest text-outline uppercase">PAID STATUS</span>
+<div class="flex gap-6">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-5 h-5 border-2 border-secondary text-secondary focus:ring-secondary" name="paid_status" type="radio"/>
+<span class="text-on-surface font-bold">YES</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-5 h-5 border-2 border-primary text-primary focus:ring-primary" name="paid_status" type="radio"/>
+<span class="text-on-surface font-bold">NO</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Remarks & Signature -->
+<div class="bg-surface-container-low p-8 rounded-xl shadow-sm border-l-8 border-outline">
+<h3 class="text-label-md font-bold tracking-widest text-outline uppercase mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined">edit_note</span> Additional Remarks
+                    </h3>
+<textarea class="modern-ledger-input w-full p-4 text-on-surface resize-none focus:ring-0" placeholder="Enter detailed vehicle condition remarks, mechanical notes, or body damage details here..." rows="6"></textarea>
+<div class="mt-12 pt-12 border-t border-outline-variant/30 grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Authorized Inspector Signature</label>
+<div class="h-24 bg-surface-container-lowest border-b-2 border-primary flex items-end pb-2 italic text-primary/40 px-4 text-3xl font-light">
+                                Sign Here
+                            </div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-black uppercase tracking-widest text-outline-variant">Date of Inspection</label>
+<input class="modern-ledger-input px-3 py-2 text-on-surface font-semibold" type="date"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Checklists (Bento Style) -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Vehicle Systems Checklist -->
+<div class="bg-white p-6 rounded-xl shadow-lg border border-surface-container-highest">
+<h3 class="text-label-md font-bold tracking-widest text-secondary uppercase mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">checklist</span> Systems Check
+                    </h3>
+<div class="space-y-3">
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Head Lights</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary transition-all" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Tail Lights</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Brake Lights</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Turn signals</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Windshield Wipers</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Horn</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Radio</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">Heat</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label><label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">A/C</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer group">
+<span class="text-on-surface font-medium">A/C</span>
+<input class="w-6 h-6 rounded border-2 border-outline-variant text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Fluids & Maintenance -->
+<div class="bg-primary-container text-white p-6 rounded-xl shadow-lg">
+<h3 class="text-label-md font-bold tracking-widest text-on-primary-container uppercase mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">water_drop</span> Fluid Authority
+                    </h3>
+<div class="space-y-2">
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+<span class="font-medium">Oil Level</span>
+<input class="w-6 h-6 rounded border-2 border-on-primary-container bg-transparent text-white focus:ring-0" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+<span class="font-medium">Transmission Fluid</span>
+<input class="w-6 h-6 rounded border-2 border-on-primary-container bg-transparent text-white focus:ring-0" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+<span class="font-medium">Brake Fluid</span>
+<input class="w-6 h-6 rounded border-2 border-on-primary-container bg-transparent text-white focus:ring-0" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+<span class="font-medium">Power Steering</span>
+<input class="w-6 h-6 rounded border-2 border-on-primary-container bg-transparent text-white focus:ring-0" type="checkbox"/>
+</label>
+<div class="mt-4 pt-4 border-t border-white/20">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span class="text-xs font-bold uppercase tracking-wider">CRITICAL CHECKS</span>
+</div>
+<label class="flex items-center justify-between p-3 rounded-lg bg-white/5 mb-2">
+<span class="text-xs">Must have 1/4 tank GAS</span>
+<input class="w-5 h-5 rounded bg-transparent border-2 border-white" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+<span class="text-xs">Anti-Freeze Must Be -10</span>
+<input class="w-5 h-5 rounded bg-transparent border-2 border-white" type="checkbox"/>
+</label><label class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+<span class="text-xs">Seat Belt</span>
+<input class="w-5 h-5 rounded bg-transparent border-2 border-white" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Emergency & Compliance -->
+<div class="bg-surface-container-highest p-6 rounded-xl border-t-4 border-secondary">
+<h3 class="text-label-md font-bold tracking-widest text-on-surface-variant uppercase mb-6">Tools &amp; Compliance</h3>
+<div class="space-y-1">
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm">Spare Tire</span>
+</label>
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm">Jack</span>
+</label>
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm">Lug Wrench</span>
+</label>
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm">Rear View Mirror</span>
+</label>
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm">Window Motors</span>
+</label>
+<div class="my-4 border-b border-outline-variant"></div>
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm font-bold">Buyers Guide</span>
+</label>
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm font-bold">Tag Bolts</span>
+</label><label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 rounded border-outline-variant text-secondary" type="checkbox"/>
+<span class="text-sm font-bold">Spare Key &amp; Works</span>
+</label>
+</div>
+</div>
+</div>
+</form>
+</main>
+<!-- Contextual Action Bar (Bottom Sticky) -->
+<!-- Footer Identity -->
+<footer class="bg-slate-50 dark:bg-slate-900 flex justify-between items-center px-8 py-6 w-full mb-24">
+<div class="text-xs font-medium tracking-wide text-slate-500 dark:text-slate-400 font-body">
+            © 2024 Right Price Auto Sales - The Precision Ledger
+        </div>
+<div class="flex gap-8">
+<a class="text-xs font-medium tracking-wide text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300" href="#">Share Report</a>
+<a class="text-xs font-medium tracking-wide text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300" href="#">Print PDF</a>
+<a class="text-xs font-medium tracking-wide text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300" href="#">Save Progress</a>
+</div>
+</footer>
+<!-- Contextual Action Bar (Bottom Sticky) -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-surface-container-highest px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-4">
+<div class="hidden md:block text-label-md font-bold text-outline tracking-widest uppercase">Precision Ledger Finalization</div>
+<div class="h-2 w-32 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-2/3"></div>
+</div>
+<span class="text-xs font-bold text-secondary">68% COMPLETE</span>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 border-2 border-secondary text-secondary font-bold rounded-lg hover:bg-secondary/5 transition-colors">
+<span class="material-symbols-outlined text-lg">share</span>
+<span>Share Report</span>
+</button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 border-2 border-outline text-outline font-bold rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+<span>Print PDF</span>
+</button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-3 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container transition-colors shadow-lg">
+<span class="material-symbols-outlined text-lg">save</span>
+<span>Save Progress</span>
+</button>
+</div>
+</div></body></html>
