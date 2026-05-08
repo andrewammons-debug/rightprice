@@ -57,6 +57,7 @@ type Vehicle = {
   created_at: string;
   photo_urls: string[] | null;
   paid_status: string;
+  website_copy?: string;
 };
 
 type MarketingPost = {
@@ -681,18 +682,39 @@ function AdCreator({
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState<CopyTab | null>(null);
+  const [websiteCopy, setWebsiteCopy] = useState(vehicle.website_copy || "");
+  const [savingBase, setSavingBase] = useState(false);
 
   const photos: string[] = vehicle.photo_urls ?? [];
   const days = daysOnLot(vehicle.inspection_date || vehicle.created_at);
+
+  async function handleSaveWebsiteCopy() {
+    setSavingBase(true);
+    try {
+      const res = await fetch("/api/inspection", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: vehicle.id, website_copy: websiteCopy }),
+      });
+      if (res.ok) {
+        await onRefreshVehicle(vehicle.vin);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setSavingBase(false);
+    }
+  }
 
   async function handleGenerate() {
     setGenerating(true);
     setGenError(null);
     try {
+      const payload = { ...vehicle, website_copy: websiteCopy };
       const res = await fetch("/api/marketing/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(vehicle),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.error ?? "Generation failed");
@@ -988,6 +1010,41 @@ function AdCreator({
 
         {/* Center: Copy Editor */}
         <div style={{ display: "flex", flexDirection: "column", borderRight: `1px solid ${T.border}` }}>
+          
+          {/* Baseline Website Copy */}
+          <div style={{ padding: "20px 20px 0 20px", display: "flex", flexDirection: "column", gap: 8, flexShrink: 0 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ fontSize: 9, fontWeight: 800, color: T.dim, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                ORIGINAL WEBSITE COPY (BASELINE)
+              </div>
+              <button
+                onClick={handleSaveWebsiteCopy}
+                disabled={savingBase || websiteCopy === vehicle.website_copy}
+                style={{
+                  background: "none", border: "none", cursor: (savingBase || websiteCopy === vehicle.website_copy) ? "default" : "pointer",
+                  color: (savingBase || websiteCopy === vehicle.website_copy) ? T.faint : T.emerald,
+                  fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em",
+                  display: "flex", alignItems: "center", gap: 4
+                }}
+              >
+                {savingBase ? <Loader2 size={10} className="animate-spin" /> : <CheckCircle2 size={10} />}
+                {savingBase ? "Saving..." : websiteCopy === vehicle.website_copy ? "Saved" : "Save Base"}
+              </button>
+            </div>
+            <textarea
+              value={websiteCopy}
+              onChange={(e) => setWebsiteCopy(e.target.value)}
+              placeholder="Paste the original website description here. AI will use this as foundational knowledge..."
+              style={{
+                width: "100%", height: 80, background: T.surf3, border: `1px solid ${T.border2}`,
+                borderRadius: 4, padding: "10px 12px", color: T.text, fontSize: 11, fontWeight: 500,
+                resize: "vertical", outline: "none"
+              }}
+            />
+          </div>
+
+          <div style={{ height: 20, borderBottom: `1px solid ${T.border}` }} />
+
           {/* Tab bar */}
           <div style={{ display: "flex", borderBottom: `1px solid ${T.border}`, flexShrink: 0 }}>
             {COPY_TABS.map((tab) => (

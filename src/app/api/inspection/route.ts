@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     const { 
       vin, year, make, modelPkg, body, miles, color, 
       autoManual, purchasedFrom, price, down, 
-      paid, remarks, signature, date, checklist 
+      paid, remarks, signature, date, checklist, website_copy
     } = data;
 
     // Safety for numeric parsing
@@ -44,7 +44,8 @@ export async function POST(request: Request) {
           remarks, 
           inspector_name: signature, 
           inspection_date: date,
-          checklist: JSON.stringify(checklist) // Assuming a jsonb column or text
+          checklist: JSON.stringify(checklist), // Assuming a jsonb column or text
+          website_copy
         }
       ])
       .select('id')
@@ -80,6 +81,7 @@ export async function PATCH(request: Request) {
     if (updateData.signature) mappedData.inspector_name = updateData.signature;
     if (updateData.date) mappedData.inspection_date = updateData.date;
     if (updateData.checklist) mappedData.checklist = JSON.stringify(updateData.checklist);
+    if (updateData.website_copy !== undefined) mappedData.website_copy = updateData.website_copy;
 
     const { error } = await supabaseAdmin
       .from('inspections')

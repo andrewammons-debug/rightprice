@@ -23,6 +23,7 @@ Color: ${vehicle.color || 'N/A'}
 Transmission: ${vehicle.transmission || 'N/A'}
 Price: $${vehicle.price}
 Remarks: ${vehicle.remarks || 'None'}
+${vehicle.website_copy ? `\nORIGINAL WEBSITE COPY (USE AS FOUNDATION FOR AD DETAILS):\n${vehicle.website_copy}\n` : ''}
 
 Return a JSON object with exactly these four keys:
 - social: 2-3 sentences, casual tone, FB/IG ready, include price and miles
@@ -40,7 +41,7 @@ Return ONLY valid JSON. No markdown code fences. No explanation before or after.
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-3-5-sonnet-latest',
         max_tokens: 1200,
         system: SYSTEM_PROMPT,
         messages: [{ role: 'user', content: userPrompt }],
