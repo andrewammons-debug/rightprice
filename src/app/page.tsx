@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { 
-  QrCode, 
-  CreditCard, 
-  Wrench, 
-  ShieldCheck, 
+import {
+  QrCode,
+  CreditCard,
+  Wrench,
+  ShieldCheck,
   Zap,
-  ArrowRight
+  ArrowRight,
+  Megaphone
 } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -108,13 +109,22 @@ export default function SuiteLandingPage() {
               accentColor="bg-primary"
             />
 
-            <PortalCard 
+            <PortalCard
               title="Lot Rot Service"
               description="Technician digital clipboard and service lifecycle management."
               icon={Wrench}
               href="/lot-rot"
               colorClass="hover:before:from-secondary/20"
               accentColor="bg-secondary"
+            />
+
+            <PortalCard
+              title="Marketing Hub"
+              description="Multi-platform publishing, AI copy generation, and campaign intelligence."
+              icon={Megaphone}
+              href="/marketing"
+              colorClass="hover:before:from-emerald-500/20"
+              accentColor="bg-emerald-700"
             />
           </div>
 
