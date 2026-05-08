@@ -29,6 +29,8 @@ import {
   Filter,
   Megaphone,
 } from "lucide-react";
+import { FaFacebook, FaInstagram, FaCar, FaYoutube, FaTag } from "react-icons/fa";
+import { SiEbay } from "react-icons/si";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -71,12 +73,12 @@ type MarketingPost = {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const PLATFORMS = [
-  { id: "facebook",  short: "FB",  name: "Facebook",    color: "#1877F2" },
-  { id: "instagram", short: "IG",  name: "Instagram",   color: "#E1306C" },
-  { id: "craigslist",short: "CL",  name: "Craigslist",  color: "#8b5cf6" },
-  { id: "cargurus",  short: "CG",  name: "CarGurus",    color: "#7B2CBF" },
-  { id: "ebay",      short: "EB",  name: "eBay Motors", color: "#E53238" },
-  { id: "carscom",   short: "CC",  name: "Cars.com",    color: "#D6242C" },
+  { id: "facebook",  short: "FB",  name: "Facebook",    color: "#1877F2", icon: FaFacebook },
+  { id: "instagram", short: "IG",  name: "Instagram",   color: "#E1306C", icon: FaInstagram },
+  { id: "craigslist",short: "CL",  name: "Craigslist",  color: "#8b5cf6", icon: FaTag },
+  { id: "cargurus",  short: "CG",  name: "CarGurus",    color: "#7B2CBF", icon: FaCar },
+  { id: "ebay",      short: "EB",  name: "eBay Motors", color: "#E53238", icon: SiEbay },
+  { id: "carscom",   short: "CC",  name: "Cars.com",    color: "#D6242C", icon: FaCar },
 ] as const;
 
 type PlatformId = (typeof PLATFORMS)[number]["id"];
@@ -177,7 +179,7 @@ const Pill = ({
         alignItems: "center",
         gap: 4,
         padding: "2px 8px",
-        borderRadius: 3,
+        borderRadius: 2,
         background: map[color] ?? map.slate,
         fontSize: 9,
         fontWeight: 800,
@@ -213,11 +215,11 @@ function Sidebar({
   ];
 
   return (
-    <nav
+    <nav className="glass-panel"
       style={{
         width: collapsed ? 64 : 220,
         minHeight: "100vh",
-        background: T.surface,
+        /* background handled by glass-panel */
         borderRight: `1px solid ${T.border}`,
         display: "flex",
         flexDirection: "column",
@@ -244,7 +246,7 @@ function Sidebar({
             width: 32,
             height: 32,
             background: T.crimson,
-            borderRadius: 4,
+            borderRadius: 2,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -286,7 +288,7 @@ function Sidebar({
                 gap: 10,
                 width: "100%",
                 padding: collapsed ? "10px 0" : "10px 12px",
-                borderRadius: 4,
+                borderRadius: 2,
                 border: "none",
                 cursor: "pointer",
                 background: active ? `${T.crimson}22` : "transparent",
@@ -325,7 +327,7 @@ function Sidebar({
                     fontSize: 9,
                     fontWeight: 800,
                     padding: "2px 6px",
-                    borderRadius: 3,
+                    borderRadius: 2,
                   }}
                 >
                   {item.badge}
@@ -489,7 +491,7 @@ function InventoryBoard({
               width: "100%",
               background: T.surf3,
               border: `1px solid ${T.border2}`,
-              borderRadius: 4,
+              borderRadius: 2,
               padding: "10px 36px 10px 36px",
               color: T.text,
               fontSize: 12,
@@ -515,7 +517,7 @@ function InventoryBoard({
             onClick={() => setFilter(f.id)}
             style={{
               padding: "6px 14px",
-              borderRadius: 3,
+              borderRadius: 2,
               border: `1px solid ${filter === f.id ? T.crimson : T.border2}`,
               background: filter === f.id ? `${T.crimson}22` : "transparent",
               color: filter === f.id ? T.text : T.dim,
@@ -549,6 +551,7 @@ function InventoryBoard({
               <button
                 key={v.id}
                 onClick={() => onSelect(v)}
+                className="elevated-card"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "64px 1fr auto auto auto",
@@ -557,7 +560,7 @@ function InventoryBoard({
                   padding: "16px 20px",
                   background: T.surface,
                   border: `1px solid ${T.border}`,
-                  borderRadius: 4,
+                  borderRadius: 2,
                   cursor: "pointer",
                   textAlign: "left",
                   transition: "background 0.15s",
@@ -571,7 +574,7 @@ function InventoryBoard({
                     width: 64,
                     height: 44,
                     background: T.surf3,
-                    borderRadius: 3,
+                    borderRadius: 2,
                     overflow: "hidden",
                     flexShrink: 0,
                   }}
@@ -612,7 +615,7 @@ function InventoryBoard({
                           alignItems: "center",
                           gap: 3,
                           padding: "4px 6px",
-                          borderRadius: 3,
+                          borderRadius: 2,
                           background: isLive ? `${p.color}18` : `${T.surf3}`,
                           border: `1px solid ${isLive ? p.color + "40" : T.border}`,
                         }}
@@ -876,7 +879,7 @@ function AdCreator({
               padding: "8px 14px",
               background: "rgba(255,255,255,.08)",
               border: "1px solid rgba(255,255,255,.15)",
-              borderRadius: 4,
+              borderRadius: 2,
               color: T.text,
               fontSize: 10,
               fontWeight: 800,
@@ -920,7 +923,7 @@ function AdCreator({
                 key={i}
                 style={{
                   height: 72,
-                  borderRadius: 4,
+                  borderRadius: 2,
                   overflow: "hidden",
                   background: T.surf3,
                   border: i === 0 ? `2px solid ${T.crimson}` : `1px solid ${T.border}`,
@@ -940,7 +943,7 @@ function AdCreator({
                   justifyContent: "center",
                   gap: 8,
                   background: T.surf3,
-                  borderRadius: 4,
+                  borderRadius: 2,
                   border: `2px dashed ${T.border2}`,
                   color: T.faint,
                 }}
@@ -974,7 +977,7 @@ function AdCreator({
               padding: "10px 0",
               background: uploading ? T.surf3 : T.surf2,
               border: `1px solid ${T.border2}`,
-              borderRadius: 4,
+              borderRadius: 2,
               color: uploading ? T.dim : T.text,
               fontSize: 10,
               fontWeight: 800,
@@ -1037,7 +1040,7 @@ function AdCreator({
               placeholder="Paste the original website description here. AI will use this as foundational knowledge..."
               style={{
                 width: "100%", height: 80, background: T.surf3, border: `1px solid ${T.border2}`,
-                borderRadius: 4, padding: "10px 12px", color: T.text, fontSize: 11, fontWeight: 500,
+                borderRadius: 2, padding: "10px 12px", color: T.text, fontSize: 11, fontWeight: 500,
                 resize: "vertical", outline: "none"
               }}
             />
@@ -1083,6 +1086,7 @@ function AdCreator({
             }}
           >
             <button
+              className="ai-generate-btn"
               onClick={handleGenerate}
               disabled={generating}
               style={{
@@ -1090,9 +1094,9 @@ function AdCreator({
                 alignItems: "center",
                 gap: 6,
                 padding: "8px 16px",
-                background: generating ? T.surf3 : T.crimson,
+                /* background handled by .ai-generate-btn */
                 border: "none",
-                borderRadius: 4,
+                borderRadius: 2,
                 color: "white",
                 fontSize: 10,
                 fontWeight: 800,
@@ -1122,7 +1126,7 @@ function AdCreator({
                 padding: "8px 12px",
                 background: copied === copyTab ? `${T.emerald}22` : T.surf2,
                 border: `1px solid ${copied === copyTab ? T.emerald : T.border2}`,
-                borderRadius: 4,
+                borderRadius: 2,
                 color: copied === copyTab ? T.emerald : T.muted,
                 fontSize: 10,
                 fontWeight: 800,
@@ -1152,7 +1156,7 @@ function AdCreator({
                 width: "100%",
                 background: T.surf3,
                 border: `1px solid ${T.border2}`,
-                borderRadius: 4,
+                borderRadius: 2,
                 padding: 16,
                 color: T.text,
                 fontSize: 13,
@@ -1191,7 +1195,7 @@ function AdCreator({
                   padding: "10px 12px",
                   background: selected ? `${p.color}18` : T.surf2,
                   border: `1px solid ${selected ? p.color + "50" : T.border}`,
-                  borderRadius: 4,
+                  borderRadius: 2,
                   cursor: "pointer",
                   textAlign: "left",
                   width: "100%",
@@ -1199,13 +1203,17 @@ function AdCreator({
               >
                 <div
                   style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: pStatus === "done" ? T.emerald : pStatus === "error" ? T.rose : pStatus === "publishing" ? T.amber : (selected ? p.color : T.faint),
+                    width: 20,
+                    height: 20,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: pStatus === "done" ? T.emerald : pStatus === "error" ? T.rose : pStatus === "publishing" ? T.amber : (selected ? p.color : T.faint),
                     flexShrink: 0,
                   }}
-                />
+                >
+                  <p.icon size={18} />
+                </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 10, fontWeight: 800, color: T.text, textTransform: "uppercase", letterSpacing: "0.04em" }}>{p.name}</div>
                   {pStatus === "error" && publishError[p.id] && (
@@ -1221,7 +1229,7 @@ function AdCreator({
                       width: 16,
                       height: 16,
                       border: `2px solid ${selected ? p.color : T.border2}`,
-                      borderRadius: 3,
+                      borderRadius: 2,
                       background: selected ? p.color : "transparent",
                       display: "flex",
                       alignItems: "center",
@@ -1249,7 +1257,7 @@ function AdCreator({
                   padding: "10px 0",
                   background: T.surf2,
                   border: `1px solid ${T.border2}`,
-                  borderRadius: 4,
+                  borderRadius: 2,
                   color: T.muted,
                   fontSize: 10,
                   fontWeight: 800,
@@ -1271,7 +1279,7 @@ function AdCreator({
                 padding: "14px 0",
                 background: selectedPlatforms.size === 0 || !copy[copyTab].trim() ? T.surf3 : T.crimson,
                 border: "none",
-                borderRadius: 4,
+                borderRadius: 2,
                 color: selectedPlatforms.size === 0 || !copy[copyTab].trim() ? T.faint : "white",
                 fontSize: 11,
                 fontWeight: 900,
@@ -1327,7 +1335,7 @@ function CampaignManager({ vehicles }: { vehicles: Vehicle[] }) {
           { label: "Leads Generated",  value: "22",      sub: "+18 vs last month", accent: T.emerald },
           { label: "Cost Per Lead",    value: "$6.92",   sub: "↓ 12% vs last month", accent: T.emerald },
         ].map(({ label, value, sub, accent }) => (
-          <div key={label} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 4, padding: "20px 24px" }}>
+          <div key={label} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 2, padding: "20px 24px" }}>
             <div style={{ fontSize: 9, fontWeight: 700, color: T.dim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>{label}</div>
             <div style={{ fontSize: 28, fontWeight: 900, fontStyle: "italic", color: accent ?? T.text, lineHeight: 1 }}>{value}</div>
             <div style={{ fontSize: 9, color: T.faint, marginTop: 6 }}>{sub}</div>
@@ -1340,9 +1348,9 @@ function CampaignManager({ vehicles }: { vehicles: Vehicle[] }) {
         {mockCampaigns.filter((c) => c.active).map((c) => {
           const ctr = ((c.clicks / c.impressions) * 100).toFixed(2);
           return (
-            <div key={c.id} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 4, padding: 24 }}>
+            <div key={c.id} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 2, padding: 24 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
-                <div style={{ width: 56, height: 40, borderRadius: 3, overflow: "hidden", background: T.surf3, flexShrink: 0 }}>
+                <div style={{ width: 56, height: 40, borderRadius: 2, overflow: "hidden", background: T.surf3, flexShrink: 0 }}>
                   {c.photo_urls?.[0]
                     ? <img src={c.photo_urls[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}><Car size={18} color={T.faint} /></div>
@@ -1420,7 +1428,7 @@ function Analytics({ vehicles }: { vehicles: Vehicle[] }) {
           { label: "Leads",          value: "142",    sub: "+18 vs last month", accent: T.emerald },
           { label: "Avg Cost/Lead",  value: "$6.92",  sub: "↓ 12%", accent: T.emerald },
         ].map(({ label, value, sub, accent }) => (
-          <div key={label} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 4, padding: "20px 24px" }}>
+          <div key={label} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 2, padding: "20px 24px" }}>
             <div style={{ fontSize: 9, fontWeight: 700, color: T.dim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>{label}</div>
             <div style={{ fontSize: 28, fontWeight: 900, fontStyle: "italic", color: accent ?? T.text, lineHeight: 1 }}>{value}</div>
             <div style={{ fontSize: 9, color: T.faint, marginTop: 6 }}>{sub}</div>
@@ -1430,7 +1438,7 @@ function Analytics({ vehicles }: { vehicles: Vehicle[] }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 32 }}>
         {/* Platform performance */}
-        <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 4, padding: 24 }}>
+        <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 2, padding: 24 }}>
           <div style={{ fontSize: 9, fontWeight: 800, color: T.dim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 20 }}>
             PLATFORM REACH — 30 DAYS
           </div>
@@ -1448,7 +1456,7 @@ function Analytics({ vehicles }: { vehicles: Vehicle[] }) {
         </div>
 
         {/* Lead sources */}
-        <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 4, padding: 24 }}>
+        <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 2, padding: 24 }}>
           <div style={{ fontSize: 9, fontWeight: 800, color: T.dim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 20 }}>
             LEADS BY PLATFORM
           </div>
@@ -1467,7 +1475,7 @@ function Analytics({ vehicles }: { vehicles: Vehicle[] }) {
       </div>
 
       {/* Vehicle Velocity Table */}
-      <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 4, padding: 24 }}>
+      <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 2, padding: 24 }}>
         <div style={{ fontSize: 9, fontWeight: 800, color: T.dim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 20 }}>
           VEHICLE VELOCITY — REAL DATA
         </div>
@@ -1483,7 +1491,7 @@ function Analytics({ vehicles }: { vehicles: Vehicle[] }) {
             const reach = (Math.random() * 8 + 1).toFixed(1);
             const clicks = Math.floor(Math.random() * 400 + 80);
             return (
-              <div key={v.id} style={{ display: "grid", gridTemplateColumns: "1fr 60px 60px 60px 100px", gap: 16, padding: "10px 12px", background: T.surf2, borderRadius: 3, border: `1px solid ${T.border}` }}>
+              <div key={v.id} style={{ display: "grid", gridTemplateColumns: "1fr 60px 60px 60px 100px", gap: 16, padding: "10px 12px", background: T.surf2, borderRadius: 2, border: `1px solid ${T.border}` }}>
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 800, fontStyle: "italic", textTransform: "uppercase", color: T.text }}>
                     {v.year} {v.make} {v.model}
@@ -1577,6 +1585,44 @@ export default function MarketingPage() {
         WebkitFontSmoothing: "antialiased",
       }}
     >
+      {/* Dynamic Styles injected for Marketing Hub UI Elevation */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes ai-glow {
+          0% { box-shadow: 0 0 10px rgba(114,0,9,0.3), inset 0 0 10px rgba(114,0,9,0.3); border-color: rgba(114,0,9,0.5); }
+          50% { box-shadow: 0 0 20px rgba(239,68,68,0.6), inset 0 0 15px rgba(239,68,68,0.4); border-color: rgba(239,68,68,0.8); }
+          100% { box-shadow: 0 0 10px rgba(114,0,9,0.3), inset 0 0 10px rgba(114,0,9,0.3); border-color: rgba(114,0,9,0.5); }
+        }
+        @keyframes ai-gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .ai-generate-btn {
+          background: linear-gradient(270deg, #0a1020, #1a2440, #720009);
+          background-size: 200% 200%;
+          animation: ai-gradient 4s ease infinite;
+          border: 1px solid rgba(239,68,68,0.4) !important;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .ai-generate-btn:hover:not(:disabled) {
+          transform: translateY(-2px) scale(1.02);
+          animation: ai-gradient 2s ease infinite, ai-glow 2s ease-in-out infinite;
+          color: #fff !important;
+        }
+        .elevated-card {
+          transition: all 0.2s ease-out !important;
+        }
+        .elevated-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+          border-color: rgba(148,163,184,.3) !important;
+        }
+        .glass-panel {
+          background: rgba(19, 28, 52, 0.8) !important;
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+        }
+      `}} />
       {/* Subtle background gradient */}
       <div
         style={{
@@ -1683,7 +1729,7 @@ export default function MarketingPage() {
                 </div>
                 <button
                   onClick={() => setSection("inventory")}
-                  style={{ padding: "10px 24px", background: T.crimson, border: "none", borderRadius: 4, color: "white", fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", cursor: "pointer" }}
+                  style={{ padding: "10px 24px", background: T.crimson, border: "none", borderRadius: 2, color: "white", fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", cursor: "pointer" }}
                 >
                   Go to Inventory Board
                 </button>
