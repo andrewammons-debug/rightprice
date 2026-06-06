@@ -138,29 +138,16 @@ const TableShrinkInput = ({ className = "", register, name, ...props }: any) => 
     );
 };
 
+
 const SectionHeader = ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-[9px] font-black uppercase tracking-widest text-slate-900 mb-1 mt-3 print:mt-1 print:mb-0.5 border-l-4 border-primary pl-2 leading-none">
+    <h3 className="text-[9px] font-black uppercase tracking-widest text-slate-900 mb-1 mt-3 print:mt-2.5 print:mb-0.5 border-l-4 border-primary pl-2 leading-none">
         {children}
     </h3>
 );
 
-const CreditApplicationForm = () => {
+const CreditApplicationFormV2 = () => {
     const [isGenerating, setIsGenerating] = useState(false);
-    const [printDateTime, setPrintDateTime] = useState("");
     const captureRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const now = new Date();
-        const options: Intl.DateTimeFormatOptions = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        };
-        setPrintDateTime(now.toLocaleString('en-US', options));
-    }, []);
 
     const {
         register,
@@ -293,12 +280,8 @@ const CreditApplicationForm = () => {
     return (
         <div 
             ref={captureRef}
-            className="relative w-full max-w-5xl mx-auto bg-white shadow-[0_10px_50px_-12px_rgba(0,0,0,0.1)] rounded-sm p-6 sm:p-8 border border-slate-200 animate-in fade-in zoom-in-95 duration-1000 paper-form print:border-0 print:shadow-none min-h-screen overflow-hidden"
+            className="w-full max-w-5xl mx-auto bg-white shadow-[0_10px_50px_-12px_rgba(0,0,0,0.1)] rounded-sm p-6 sm:p-8 border border-slate-200 animate-in fade-in zoom-in-95 duration-1000 paper-form print:border-0 print:shadow-none min-h-screen overflow-hidden"
         >
-            {/* Clean Print-Only Dynamic Timestamp */}
-            <div className="hidden print:block absolute top-2 right-4 text-[7.5px] text-slate-400 font-bold uppercase tracking-wider">
-                {printDateTime}
-            </div>
             <style jsx global>{`
                 @media print {
                     @page { 
@@ -316,16 +299,18 @@ const CreditApplicationForm = () => {
                     .paper-form { 
                         width: 100% !important; 
                         max-width: 100% !important; 
-                        height: auto !important;
-                        min-height: 0 !important;
-                        padding: 2mm 4mm !important; /* Tightened inner margins for letter pages */
+                        height: 100% !important;
+                        min-height: 100% !important;
+                        padding: 4mm 6mm !important; /* Balanced print inner spacing */
                         margin: 0 auto !important;
                         box-shadow: none !important;
                         border: none !important;
                         transform: none !important;
                         background-color: #ffffff !important;
                         color: #000000 !important;
-                        display: block !important; /* Predictable block display for single-sheet output */
+                        display: flex !important;
+                        flex-direction: column !important;
+                        justify-content: space-between !important;
                     }
                 }
                 .hide-buttons-for-pdf .no-print {
@@ -344,7 +329,7 @@ const CreditApplicationForm = () => {
                 }
             `}</style>
             
-            <div className="text-center mb-4 print:mb-2">
+            <div className="text-center mb-4 print:mb-3">
                 <h1 className="text-xl font-black uppercase tracking-[0.2em] text-slate-900 relative inline-block pb-1 print:text-lg">
                     Credit Application
                     <div className="absolute bottom-0 left-0 w-full h-1 bg-slate-900" />
@@ -352,10 +337,10 @@ const CreditApplicationForm = () => {
                 </h1>
             </div>
 
-            <form className="space-y-3.5 print:space-y-0.75">
+            <form className="space-y-3.5 print:space-y-2.5 flex-1 flex flex-col justify-between">
                 <div>
                     <SectionHeader>Personal Information</SectionHeader>
-                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-0.5 overflow-hidden">
+                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-1.5 overflow-hidden">
                         <UnderlineInput label="Name" className="col-span-6" register={register} name="name" error={errors.name} />
                         <UnderlineInput label="Date of Birth" className="col-span-3" register={register} name="dob" error={errors.dob} />
                         <UnderlineInput label="Phone #" className="col-span-3" register={register} name="phone" error={errors.phone} />
@@ -373,36 +358,33 @@ const CreditApplicationForm = () => {
 
                 <div>
                     <SectionHeader>Residential Status</SectionHeader>
-                    <div className="space-y-2 print:space-y-0.5">
-                        <div className="flex items-center gap-6 py-2 px-3 print:py-1 print:px-2 print:bg-transparent print:border-none rounded-lg border border-slate-100/50" style={{ backgroundColor: '#f8fafc' }}>
-                            <div className="flex items-center gap-3">
-                                <Label className="text-[10px] font-bold uppercase text-slate-500">Home</Label>
-                                <div className="flex items-center gap-2">
-                                    <Checkbox id="rent" onCheckedChange={(checked) => checked && setValue("homeStatus", "rent")} checked={watch("homeStatus") === "rent"} />
-                                    <label htmlFor="rent" className="text-[10px] font-bold uppercase text-slate-900 cursor-pointer">Rent</label>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Checkbox id="own" onCheckedChange={(checked) => checked && setValue("homeStatus", "own")} checked={watch("homeStatus") === "own"} />
-                                    <label htmlFor="own" className="text-[10px] font-bold uppercase text-slate-900 cursor-pointer">Own</label>
-                                </div>
+                    <div className="flex items-center gap-6 py-2 px-3 print:py-1 print:px-2 print:bg-transparent print:border-none rounded-lg border border-slate-100/50" style={{ backgroundColor: '#f8fafc' }}>
+                        <div className="flex items-center gap-3">
+                            <Label className="text-[10px] font-bold uppercase text-slate-500">Home</Label>
+                            <div className="flex items-center gap-2">
+                                <Checkbox id="rent" onCheckedChange={(checked) => checked && setValue("homeStatus", "rent")} checked={watch("homeStatus") === "rent"} />
+                                <label htmlFor="rent" className="text-[10px] font-bold uppercase text-slate-900 cursor-pointer">Rent</label>
                             </div>
-                            <UnderlineInput label="Monthly $" className="w-32" register={register} name="monthlyHomeCost" />
-                            <UnderlineInput label="To Whom?" className="flex-1" register={register} name="toWhom" />
-                        </div>
-                        <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-0.5 overflow-hidden">
-                            <UnderlineInput label="Previous Address" className="col-span-7" register={register} name="previousAddress" />
-                            <div className="col-span-5 flex gap-3">
-                                <Label className="text-[10px] font-bold uppercase text-slate-500 self-end">How Long</Label>
-                                <UnderlineInput label="Yrs" className="w-12" register={register} name="howLongYrs" />
-                                <UnderlineInput label="Mos" className="w-12" register={register} name="howLongMos" />
+                            <div className="flex items-center gap-2">
+                                <Checkbox id="own" onCheckedChange={(checked) => checked && setValue("homeStatus", "own")} checked={watch("homeStatus") === "own"} />
+                                <label htmlFor="own" className="text-[10px] font-bold uppercase text-slate-900 cursor-pointer">Own</label>
                             </div>
                         </div>
+                        <UnderlineInput label="Monthly $" className="w-32" register={register} name="monthlyHomeCost" />
+                        <UnderlineInput label="To Whom?" className="flex-1" register={register} name="toWhom" />
                     </div>
                 </div>
 
                 <div>
                     <SectionHeader>Employment Information</SectionHeader>
-                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-0.5 overflow-hidden">
+                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-1.5 overflow-hidden">
+                        <UnderlineInput label="Previous Address" className="col-span-7" register={register} name="previousAddress" />
+                        <div className="col-span-5 flex gap-3">
+                            <Label className="text-[10px] font-bold uppercase text-slate-500 self-end">How Long</Label>
+                            <UnderlineInput label="Yrs" className="w-12" register={register} name="howLongYrs" />
+                            <UnderlineInput label="Mos" className="w-12" register={register} name="howLongMos" />
+                        </div>
+
                         <UnderlineInput label="Employer" className="col-span-7" register={register} name="employer" error={errors.employer} />
                         <UnderlineInput label="Phone #" className="col-span-5" register={register} name="employerPhone" />
 
@@ -410,7 +392,7 @@ const CreditApplicationForm = () => {
                         <UnderlineInput label="Net Comp $" className="col-span-5" register={register} name="netCompensation" error={errors.netCompensation} />
                     </div>
 
-                    <div className="grid grid-cols-12 gap-x-6 gap-y-2 mt-2 print:mt-0.5">
+                    <div className="grid grid-cols-12 gap-x-6 gap-y-2 mt-2 print:mt-1.5">
                         <UnderlineInput label="Former Employer" className="col-span-7" register={register} name="formerEmployer" />
                         <div className="col-span-5 flex gap-3">
                             <Label className="text-[10px] font-bold uppercase text-slate-500 mb-1 self-end">How Long</Label>
@@ -423,13 +405,13 @@ const CreditApplicationForm = () => {
 
                 <div>
                     <SectionHeader>Nearest Relative (Not living with you)</SectionHeader>
-                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-0.5 overflow-hidden">
+                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-1.5 overflow-hidden">
                         <UnderlineInput label="Name" className="col-span-6" register={register} name="relativeName" error={errors.relativeName} />
                         <UnderlineInput label="Address" className="col-span-6" register={register} name="relativeAddress" error={errors.relativeAddress} />
                     </div>
                 </div>
 
-                <div className="mt-1 p-1.5 print:py-0.5 print:mt-0.5 print:bg-transparent border border-slate-200 print:border-black rounded relative overflow-hidden" style={{ backgroundColor: '#f1f5f9' }}>
+                <div className="mt-1 p-1.5 print:py-1 print:bg-transparent border border-slate-200 print:border-black rounded relative overflow-hidden" style={{ backgroundColor: '#f1f5f9' }}>
                     <div className="absolute top-0 left-0 w-1 h-full print:hidden" style={{ backgroundColor: '#cbd5e1' }} />
                     <p className="text-[8px] leading-tight text-slate-600 font-semibold italic text-center px-4 print:text-black">
                         Note: You are not required to list income from alimony, child support, or separate maintenance payments UNLESS you wish to rely on such income. However, if any of the additional income shown is from such source, what is the amount?
@@ -437,14 +419,14 @@ const CreditApplicationForm = () => {
                 </div>
 
                 <div>
-                    <div className="grid grid-cols-12 gap-6 py-1.5 px-3 print:py-0.5 print:px-2 print:bg-transparent rounded-lg" style={{ backgroundColor: '#f8fafc' }}>
+                    <div className="grid grid-cols-12 gap-6 py-1.5 px-3 print:py-1 print:px-2 print:bg-transparent rounded-lg" style={{ backgroundColor: '#f8fafc' }}>
                         <UnderlineInput label="Other Income $" className="col-span-4" register={register} name="otherIncomeAmount" />
                         <UnderlineInput label="(Monthly) Source" className="col-span-8" register={register} name="otherIncomeSource" />
                     </div>
                 </div>
 
-                <div className="space-y-1.5 pt-1.5 border-t border-slate-200 print:border-black print:space-y-1 print:pt-1">
-                    <div className="flex items-center justify-between gap-4 p-1.5 print:py-0.5 print:px-2 print:bg-transparent rounded-lg" style={{ backgroundColor: '#f8fafc' }}>
+                <div className="space-y-1.5 pt-1.5 border-t border-slate-200 print:border-black">
+                    <div className="flex items-center justify-between gap-4 p-1.5 print:py-1 print:px-2 print:bg-transparent rounded-lg" style={{ backgroundColor: '#f8fafc' }}>
                         <Label className="text-[9px] font-black uppercase text-slate-900 leading-tight">
                             Will your present or former spouse, if any, be contractually liable for this debt?
                         </Label>
@@ -464,7 +446,7 @@ const CreditApplicationForm = () => {
                         If yes, are you married [ ] unmarried [ ] separated [ ] ? If yes, or if you are relying, for repayment, on alimony, child support, or maintenance payments, answer the following questions about your (present or former) spouse:
                     </p>
 
-                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-0.5 overflow-hidden">
+                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-1.5 overflow-hidden">
                         <div className="col-span-12 flex items-center gap-4 py-1 print:py-0.5">
                             <div className="flex items-center gap-2">
                                 <Checkbox id="married" onCheckedChange={(checked) => checked && setValue("maritalStatus", "married")} checked={watch("maritalStatus") === "married"} />
@@ -514,7 +496,7 @@ const CreditApplicationForm = () => {
 
                 <div>
                     <SectionHeader>Credit and Trade Reference</SectionHeader>
-                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-0.5 overflow-hidden">
+                    <div className="grid grid-cols-12 gap-x-4 gap-y-2 print:gap-y-1.5 overflow-hidden">
                         <UnderlineInput label="Your Bank" className="col-span-6" register={register} name="bankName" />
                         <div className="col-span-6 flex items-center justify-between px-2">
                             <div className="flex items-center gap-2">
@@ -533,7 +515,7 @@ const CreditApplicationForm = () => {
                         <UnderlineInput label="Address" className="col-span-12" register={register} name="bankAddress" />
                     </div>
 
-                    <div className="grid grid-cols-12 gap-x-6 gap-y-2 mt-2 print:mt-0.5">
+                    <div className="grid grid-cols-12 gap-x-6 gap-y-2 mt-2 print:mt-1.5">
                         <UnderlineInput label="Last Car Purchased From: Dealer" className="col-span-7" register={register} name="lastCarDealer" />
                         <UnderlineInput label="Financed By" className="col-span-5" register={register} name="financedBy" />
                     </div>
@@ -569,14 +551,14 @@ const CreditApplicationForm = () => {
                     </div>
                 </div>
 
-                <div className="mt-2 pt-2 border-t border-slate-200 print:border-black print:mt-0.5 print:pt-0.5">
+                <div className="mt-2 pt-2 border-t border-slate-200 print:border-black">
                     <p className="text-[7.5px] font-semibold leading-tight text-slate-500 mb-2 print:text-[7.5px] print:text-black">
                         I AUTHORIZE the making of whatever credit inquiries are deemed necessary in connection with my credit application or in the course of review or collection of any credit extended in reliance on the application. I authorize and instruct any person or consumer reporting agency to compile and furnish any information it may have or obtain in response to such credit inquiries and agree that same shall remain your property whether or not credit is extended.
                         <br />
                         <strong>I have read the foregoing application and the statements made in it are true and correct.</strong>
                     </p>
 
-                    <div className="grid grid-cols-12 gap-x-12 mt-1.5 print:mt-0.5">
+                    <div className="grid grid-cols-12 gap-x-12 mt-1.5 print:mt-1">
                         <UnderlineInput label="Date" className="col-span-4" register={register} name="authDate" error={errors.authDate} type="date" />
                         <div className="col-span-8 flex flex-col gap-1">
                             <div className="flex items-end gap-2">
@@ -622,4 +604,4 @@ const CreditApplicationForm = () => {
     );
 };
 
-export default CreditApplicationForm;
+export default CreditApplicationFormV2;

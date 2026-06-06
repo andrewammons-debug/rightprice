@@ -78,6 +78,9 @@ export const creditApplicationSchema = z.object({
     reference3Name: z.string().optional(),
     reference3Address: z.string().optional(),
     reference3Phone: z.string().optional(),
+    reference4Name: z.string().optional(),
+    reference4Address: z.string().optional(),
+    reference4Phone: z.string().optional(),
 
     // AUTHORIZATION
     authDate: z.string().min(1, "Date is required"),
