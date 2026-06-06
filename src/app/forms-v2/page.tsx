@@ -300,8 +300,10 @@ function HSSlide({ isActive, margin, onMarginChange }: { isActive: boolean; marg
         <div className="screen-editor w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 space-y-6 text-white overflow-visible">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-6">
             <div>
+              <div className="text-[9px] font-black tracking-widest uppercase text-emerald-450 bg-emerald-950/50 border border-emerald-900/40 px-2 py-0.5 rounded w-fit mb-2 flex items-center gap-1">
+                <span>🌿</span> Heritage South Edition <span>🌿</span>
+              </div>
               <h1 className="text-xl font-black uppercase tracking-wider text-white">Express Application</h1>
-              <p className="text-[10px] font-bold tracking-widest uppercase text-primary mt-1 leading-none">Heritage South Community Credit Union</p>
               <p className="text-[10px] font-bold tracking-widest uppercase text-slate-400 mt-1 leading-none">Aplicación Rápida</p>
             </div>
             <div className="flex items-center gap-3 bg-slate-800/50 rounded-lg p-3 border border-slate-700/30">
