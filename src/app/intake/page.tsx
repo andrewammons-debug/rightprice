@@ -354,9 +354,33 @@ export default function VinScannerForm() {
   const printNativePdf = async () => {
     setIsSaving(true);
     try {
+      // Auto-commit to DB before printing so no record is ever lost
+      let savedId = editingId;
+      if (!savedId) {
+        const res = await fetch('/api/inspection', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+        if (res.ok) {
+          const result = await res.json();
+          savedId = result.id;
+          setEditingId(result.id);
+          const sessionIds = JSON.parse(localStorage.getItem("session_ids") || "[]");
+          if (!sessionIds.includes(result.id)) {
+            sessionIds.push(result.id);
+            localStorage.setItem("session_ids", JSON.stringify(sessionIds));
+          }
+        } else {
+          const err = await res.json();
+          alert(`Auto-save failed before print: ${err.error || "Unknown error."}`);
+          return;
+        }
+      }
+
       const { generateNativePdf } = await import("@/lib/pdfEngine");
       const pdfBlob = await generateNativePdf(formData);
-      
+
       const url = URL.createObjectURL(pdfBlob);
       const iframe = document.createElement('iframe');
       iframe.style.display = 'none';
@@ -365,8 +389,8 @@ export default function VinScannerForm() {
       iframe.onload = () => {
         iframe.contentWindow?.print();
       };
-      
-      if (editingId) markAsProcessed(editingId);
+
+      if (savedId) markAsProcessed(savedId);
     } catch (e) {
       console.error("Print Fail:", e);
       alert("Error preparing exact PDF for print.");

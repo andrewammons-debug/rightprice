@@ -8,7 +8,11 @@ import {
   ShieldCheck,
   Zap,
   ArrowRight,
-  Megaphone
+  Megaphone,
+  FileText,
+  ClipboardList,
+  Receipt,
+  Building2
 } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -90,8 +94,9 @@ export default function SuiteLandingPage() {
             </p>
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <PortalCard 
+          {/* Core Tools */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12">
+            <PortalCard
               title="Vehicle Intake"
               description="High-speed VIN intelligence and digital acquisition logging."
               icon={QrCode}
@@ -99,8 +104,8 @@ export default function SuiteLandingPage() {
               colorClass="hover:before:from-primary/20"
               accentColor="bg-primary"
             />
-            
-            <PortalCard 
+
+            <PortalCard
               title="Credit Application"
               description="Seamless multi-point consumer financing and credit intelligence."
               icon={CreditCard}
@@ -126,6 +131,49 @@ export default function SuiteLandingPage() {
               colorClass="hover:before:from-emerald-500/20"
               accentColor="bg-emerald-700"
             />
+          </div>
+
+          {/* Dealership Forms */}
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px flex-1 bg-white/10" />
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30">Dealership Forms</span>
+              <div className="h-px flex-1 bg-white/10" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+              <PortalCard
+                title="Express App HS"
+                description="Heritage South Community Credit Union express application."
+                icon={Building2}
+                href="/express-app-hs"
+                colorClass="hover:before:from-amber-500/20"
+                accentColor="bg-amber-700"
+              />
+              <PortalCard
+                title="Express App"
+                description="Generic lender express credit application with editable branding."
+                icon={FileText}
+                href="/express-app"
+                colorClass="hover:before:from-amber-500/20"
+                accentColor="bg-amber-600"
+              />
+              <PortalCard
+                title="Deal Sheet"
+                description="Sold deal sheet with vehicle lookup and finance breakdown."
+                icon={ClipboardList}
+                href="/deal-sheet"
+                colorClass="hover:before:from-violet-500/20"
+                accentColor="bg-violet-700"
+              />
+              <PortalCard
+                title="Buyers Order"
+                description="Right Price buyers order with auto-filled vehicle data."
+                icon={Receipt}
+                href="/buyers-order"
+                colorClass="hover:before:from-violet-500/20"
+                accentColor="bg-violet-600"
+              />
+            </div>
           </div>
 
           <footer className="mt-24 border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-8">
