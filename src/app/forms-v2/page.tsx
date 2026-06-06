@@ -294,7 +294,7 @@ function HSSlide({ isActive, margin, onMarginChange }: { isActive: boolean; marg
         onClear={() => { if (confirm("Clear all fields?")) setD(BHS()); }}
         onPrint={() => window.print()} onDownload={handleDownload} onShare={handleShare} busy={busy} />
       
-      <div className="form-wrapper py-8 px-6 flex justify-center bg-slate-950 flex-1 overflow-y-auto">
+      <div className="form-wrapper py-8 px-6 flex justify-center items-start bg-slate-950 flex-1 overflow-y-auto">
         
         {/* On-Screen Editor UI */}
         <div className="screen-editor w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 space-y-6 text-white overflow-visible">
@@ -470,7 +470,7 @@ function GASlide({ isActive, margin, onMarginChange }: { isActive: boolean; marg
         onClear={() => { if (confirm("Clear all fields?")) { setD(BGA()); setLender(""); } }}
         onPrint={() => window.print()} onDownload={handleDownload} onShare={handleShare} busy={busy} />
       
-      <div className="form-wrapper py-8 px-6 flex justify-center bg-slate-950 flex-1 overflow-y-auto">
+      <div className="form-wrapper py-8 px-6 flex justify-center items-start bg-slate-950 flex-1 overflow-y-auto">
         
         {/* On-Screen Editor UI */}
         <div className="screen-editor w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 space-y-6 text-white overflow-visible">
@@ -665,7 +665,7 @@ function DSSlide({ isActive, margin, onMarginChange }: { isActive: boolean; marg
         onPrint={() => window.print()} onDownload={handleDownload} onShare={handleShare} busy={busy}
         vinInput={vinInput} onVinChange={setVinInput} onVinLookup={lookupVehicle} looking={looking} />
       
-      <div className="form-wrapper py-8 px-6 flex justify-center bg-slate-950 flex-1 overflow-y-auto">
+      <div className="form-wrapper py-8 px-6 flex justify-center items-start bg-slate-950 flex-1 overflow-y-auto">
         
         {/* On-Screen Editor UI */}
         <div className="screen-editor w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 space-y-6 text-white overflow-visible">
@@ -941,7 +941,7 @@ function BOSlide({ isActive, margin, onMarginChange }: { isActive: boolean; marg
         onPrint={() => window.print()} onDownload={handleDownload} onShare={handleShare} busy={busy}
         vinInput={vinInput} onVinChange={setVinInput} onVinLookup={lookupVehicle} looking={looking} />
       
-      <div className="form-wrapper py-8 px-6 flex justify-center bg-slate-950 flex-1 overflow-y-auto">
+      <div className="form-wrapper py-8 px-6 flex justify-center items-start bg-slate-950 flex-1 overflow-y-auto">
         
         {/* On-Screen Editor UI */}
         <div className="screen-editor w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 space-y-6 text-white overflow-visible">
